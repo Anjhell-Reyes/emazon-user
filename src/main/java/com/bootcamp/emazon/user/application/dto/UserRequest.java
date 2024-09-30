@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class UserAccountRequest {
+public class UserRequest {
 
     @NotNull(message = MessageConstants.MessageExceptionUserAccount.NAME_NOT_NULL_MESSAGE)
     @NotEmpty(message = MessageConstants.MessageExceptionUserAccount.NAME_NOT_EMPTY_MESSAGE)

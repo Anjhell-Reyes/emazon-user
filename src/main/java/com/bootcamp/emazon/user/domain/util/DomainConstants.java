@@ -6,11 +6,13 @@ import java.util.regex.Pattern;
 
 public class DomainConstants {
     private DomainConstants() {
-        // Constructor privado para evitar la instanciación
     }
 
-    public static final String DEFAULT_ROLE = "aux_bodega";
-
+    public static final class Roles {
+        public static final String AUX_ROLE = "aux_bodega";
+        public static final String ADMIN_ROLE = "admin";
+        public static final String CUSTOMER_ROLE = "customer";
+    }
     public static final class Validations {
 
         //Validation email
@@ -22,5 +24,8 @@ public class DomainConstants {
 
         //Validation age
         public static final Integer MIN_AGE = 18;
+
+        //Validation Identity Document
+        public static final String NUMERIC_PATTERN = "\\d+";
     }
 }

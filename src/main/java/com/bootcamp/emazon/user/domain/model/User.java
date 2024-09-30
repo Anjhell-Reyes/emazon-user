@@ -2,7 +2,7 @@ package com.bootcamp.emazon.user.domain.model;
 
 import java.time.LocalDate;
 
-public class UserAccount {
+public class User {
     private String name;
     private String lastName;
     private String identityDocument;
@@ -12,7 +12,7 @@ public class UserAccount {
     private String password;
     private Role role;
 
-    public UserAccount(String name, String lastName, String identityDocument, String phone, LocalDate birthdate, String email, String password) {
+    public User(String name, String lastName, String identityDocument, String phone, LocalDate birthdate, String email, String password) {
         this.name = name;
         this.lastName = lastName;
         this.identityDocument = identityDocument;
@@ -20,6 +20,10 @@ public class UserAccount {
         this.birthdate = birthdate;
         this.email = email;
         this.password = password;
+    }
+
+    public User() {
+
     }
 
     public String getName() {

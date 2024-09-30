@@ -3,7 +3,7 @@ package com.bootcamp.emazon.user.domain.usecase;
 import com.bootcamp.emazon.user.domain.api.IUserAccountServicePort;
 import com.bootcamp.emazon.user.domain.exception.*;
 import com.bootcamp.emazon.user.domain.model.Role;
-import com.bootcamp.emazon.user.domain.model.UserAccount;
+import com.bootcamp.emazon.user.domain.model.User;
 import com.bootcamp.emazon.user.domain.spi.IPasswordEncoder;
 import com.bootcamp.emazon.user.domain.spi.IRolePersistencePort;
 import com.bootcamp.emazon.user.domain.spi.IUserAccountPersistencePort;
@@ -25,64 +25,64 @@ public class UserAccountUseCase implements IUserAccountServicePort {
     }
 
     @Override
-    public UserAccount createUserAccount(UserAccount userAccount) {
+    public User createUserAccount(User user) {
 
         //Validate required fields
-        if(userAccount.getName() == null){
+        if(user.getName() == null){
             throw new NameNotNullException();
         }
 
-        if(userAccount.getLastName() == null){
+        if(user.getLastName() == null){
             throw new LastNameNotNullException();
         }
 
-        if (userAccount.getBirthdate() == null){
+        if (user.getBirthdate() == null){
             throw new BirthdateNotNullException();
         }
 
-        if (userAccount.getEmail() == null){
+        if (user.getEmail() == null){
             throw new EmailNotNullException();
         }
 
-        if (userAccount.getPhone() == null){
+        if (user.getPhone() == null){
             throw new PhoneNotNullException();
         }
 
-        if (userAccount.getPassword() == null){
+        if (user.getPassword() == null){
             throw new PasswordNotNullException();
         }
 
-        if (userAccount.getIdentityDocument() == null){
+        if (user.getIdentityDocument() == null){
             throw new IdentityDocumentNotNullException();
         }
 
         //Validate if the user is of legal age
-        if (Period.between(userAccount.getBirthdate(), LocalDate.now()).getYears() < DomainConstants.Validations.MIN_AGE) {
+        if (Period.between(user.getBirthdate(), LocalDate.now()).getYears() < DomainConstants.Validations.MIN_AGE) {
             throw new UnderageException();
         }
 
         //Validate if the email is valid
-        if (!isValidEmail(userAccount.getEmail())) {
+        if (!isValidEmail(user.getEmail())) {
             throw new InvalidEmailFormatException();
         }
 
         //Validate the maximum size of the phone number
-        if(userAccount.getPhone().length() > DomainConstants.Validations.MAX_LENGHT_PHONE){
+        if(user.getPhone().length() > DomainConstants.Validations.MAX_LENGHT_PHONE){
             throw new PhoneMaxCharactersException();
         }
 
         //Validate if the identity document has only numbers
-        if(!isIdentityDocumentValid(userAccount.getIdentityDocument())){
+        if(!isIdentityDocumentValid(user.getIdentityDocument())){
             throw new InvalidIdentityDocumentFormatException();
         }
 
-        userAccount.setPassword(passwordEncoder.encryptPassword(userAccount.getPassword()));
+        user.setPassword(passwordEncoder.encryptPassword(user.getPassword()));
 
         // Assign the role "aux_bodega"
-        Role role = rolePersistencePort.getRoleByName(DomainConstants.DEFAULT_ROLE);
-        userAccount.setRole(role);
+        Role role = rolePersistencePort.getRoleByName(DomainConstants.Roles.AUX_ROLE);
+        user.setRole(role);
 
-        return userAccountPersistencePort.saveUserAccount(userAccount);
+        return userAccountPersistencePort.saveUserAccount(user);
     }
 
     private boolean isValidEmail(String email) {
@@ -90,6 +90,6 @@ public class UserAccountUseCase implements IUserAccountServicePort {
     }
 
     private boolean isIdentityDocumentValid(String identityDocument) {
-        return identityDocument != null && identityDocument.matches("\\d+");
+        return identityDocument != null && identityDocument.matches(DomainConstants.Validations.NUMERIC_PATTERN);
     }
 }

@@ -1,8 +1,10 @@
 package com.bootcamp.emazon.user.domain.spi;
 
-import com.bootcamp.emazon.user.domain.model.UserAccount;
+import com.bootcamp.emazon.user.domain.model.User;
 
 public interface IUserAccountPersistencePort {
 
-    UserAccount saveUserAccount(UserAccount userAccount);
+    User saveUserAccount(User user);
+
+    User getUserByEmail(String email);
 }

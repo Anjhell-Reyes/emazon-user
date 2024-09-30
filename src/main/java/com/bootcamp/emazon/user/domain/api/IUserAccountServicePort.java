@@ -1,8 +1,8 @@
 package com.bootcamp.emazon.user.domain.api;
 
-import com.bootcamp.emazon.user.domain.model.UserAccount;
+import com.bootcamp.emazon.user.domain.model.User;
 
 public interface IUserAccountServicePort {
 
-    UserAccount createUserAccount(UserAccount userAccount);
+    User createUserAccount(User user);
 }

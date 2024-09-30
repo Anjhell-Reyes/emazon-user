@@ -15,7 +15,8 @@ public enum ExceptionResponse {
     PHONE_MAX_LENGHT("Phone must be " + DomainConstants.Validations.MAX_LENGHT_PHONE + " characters or less"),
     IDENTITY_DOCUMENT_CONTANIN_LETTER("The identity document must contain only numbers"),
     UNDERAGE_USER("Age must be over " + DomainConstants.Validations.MIN_AGE + " years old"),
-    ROLE_NOT_FOUND("Role not found");
+    ROLE_NOT_FOUND("Role not found"),
+    USER_NOT_FOUND("User not found");
     private String message;
 
     ExceptionResponse(String message) {

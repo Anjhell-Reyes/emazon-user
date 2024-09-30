@@ -1,29 +1,39 @@
 package com.bootcamp.emazon.user.infraestructure.output.adapter;
 
-import com.bootcamp.emazon.user.domain.model.UserAccount;
+import com.bootcamp.emazon.user.domain.exception.UserNotFoundException;
+import com.bootcamp.emazon.user.domain.model.User;
 import com.bootcamp.emazon.user.domain.spi.IUserAccountPersistencePort;
-import com.bootcamp.emazon.user.infraestructure.output.mapper.UserAccountEntityMapper;
-import com.bootcamp.emazon.user.infraestructure.output.repository.IUserAccountRepository;
+import com.bootcamp.emazon.user.infraestructure.output.entity.UserEntity;
+import com.bootcamp.emazon.user.infraestructure.output.mapper.UserEntityMapper;
+import com.bootcamp.emazon.user.infraestructure.output.repository.IUserRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class UserAccountJpaAdapter implements IUserAccountPersistencePort {
 
-    private final IUserAccountRepository userAccountRepository;
-    private final UserAccountEntityMapper userAccountEntityMapper;
+    private final IUserRepository userAccountRepository;
+    private final UserEntityMapper userEntityMapper;
 
-    public IUserAccountRepository getUserAccountRepository() {
+    public IUserRepository getUserAccountRepository() {
         return userAccountRepository;
     }
 
-    public UserAccountEntityMapper getUserAccountEntityMapper() {
-        return userAccountEntityMapper;
+    public UserEntityMapper getUserEntityMapper() {
+        return userEntityMapper;
     }
 
     @Override
-    public UserAccount saveUserAccount(UserAccount userAccount) {
+    public User saveUserAccount(User user) {
 
-        userAccountRepository.save(userAccountEntityMapper.toEntity(userAccount));
-        return userAccount;
+        userAccountRepository.save(userEntityMapper.toEntity(user));
+        return user;
+    }
+
+    @Override
+    public User getUserByEmail(String email){
+        UserEntity user = userAccountRepository.findByEmail(email)
+        .orElseThrow(UserNotFoundException::new);
+
+        return userEntityMapper.toUser(user);
     }
 }

@@ -33,7 +33,7 @@ class RoleJpaAdapterTest {
 
     private Role role;
     private RoleEntity roleEntity;
-    private String roleName = DomainConstants.DEFAULT_ROLE;
+    private String roleName = DomainConstants.Roles.AUX_ROLE;
 
     @BeforeEach
     void setUp() {

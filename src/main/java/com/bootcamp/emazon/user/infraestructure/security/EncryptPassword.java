@@ -1,4 +1,4 @@
-package com.bootcamp.emazon.user.infraestructure.output.util;
+package com.bootcamp.emazon.user.infraestructure.security;
 
 import com.bootcamp.emazon.user.domain.spi.IPasswordEncoder;
 import org.mindrot.jbcrypt.BCrypt;
